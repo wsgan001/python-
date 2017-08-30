@@ -1,0 +1,14 @@
+{% extends "base.html" %}  {# extends继承模板 #}
+{% block content %}
+<h2>淘宝商品信息</h2>
+<ul>
+    <tr>
+        <td>|      搜索名     | </td>
+        <td>|       id      |</td>
+        <td>|       标题         |</td></tr>
+{% for info in object_list %} {# 循环数据库表内容 #}
+<li>{{ info.s_name|truncatewords:"30"  }}{{'     |     '}}{{ info.ids|truncatewords:"30"  }}{{'     |     '}}{{ info.titles|truncatewords:"30"  }}</li>  {# 数据库表字段 #}
+{% endfor %}
+</ul>
+
+{% endblock %}

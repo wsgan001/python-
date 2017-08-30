@@ -1,0 +1,20 @@
+{% for winlog in winloglist.object_list %}
+  {{ winlog.date }}|{{ winlog.time }} <br />
+{% endfor %}
+{% if winloglist.has_previous %}
+<a href="?page={{ winloglist.previous_page_number }}" title="下一页">上一页</a>&
+nbsp;
+{% endif %}
+{% for p in page_range %}
+{% ifequal p winloglist.number %}
+<span>{{p}}</span>
+{% else %}
+<a href="?page={{p}}" title="第{{p}}页">{{p}}</a>
+{% endifequal %}
+{% endfor %}
+
+{% if winloglist.has_next %}
+<a href="?page={{ winloglist.next_page_number }}" title="下一页">下一页</a>
+;
+{% endif %}
+<!-- 第 {{ userList.number }} 页 共 {{ userList.paginator.num_pages }} 页-->
