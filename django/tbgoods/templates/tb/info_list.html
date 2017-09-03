@@ -1,14 +1,51 @@
-{% extends "base.html" %}  {# extends继承模板 #}
+{% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
 {% block content %}
-<h2>淘宝商品信息</h2>
-<ul>
-    <tr>
-        <td>|      搜索名     | </td>
-        <td>|       id      |</td>
-        <td>|       标题         |</td></tr>
-{% for info in object_list %} {# 循环数据库表内容 #}
-<li>{{ info.s_name|truncatewords:"30"  }}{{'     |     '}}{{ info.ids|truncatewords:"30"  }}{{'     |     '}}{{ info.titles|truncatewords:"30"  }}</li>  {# 数据库表字段 #}
-{% endfor %}
-</ul>
 
+<div>
+<li><a class="icon" href="/download/" target="dwzExport" targetType="navTab" title="确定要导出这些记录吗？">
+    <span>导出CSV文件</span></a></li>  {# -------------------------------导出按钮------------------------------ #}
+<li></li>
+<li><a class="icon" href="/upload/" target="dialog" mask="true" width="500", height="300", title="导入CSV文件" rel="uploadfileresource">
+    <span>导入CSV文件</span></a></li>   {# -------------------------------导入按钮------------------------------ #}
+</div>
+
+
+  {# -------------------------------搜索表单------------------------------ #}
+  <div id="header-search-box">
+    ...
+    <form role="search" method="get" id="searchform" action="/tblist_s">
+      {% csrf_token %}
+      <li>搜索关键字：</li>
+      <input type="search" name="q" placeholder="Search" required>
+      <input type="submit" , value="搜索"><span class="ion-ios-search-strong"></span></input>
+    </form>
+    ...
+  </div>
+
+<h2>淘宝商品信息</h2>      {# ----------------------------数据展示模板----------------------------- #}
+<table border="2">
+    <tr>
+         <td>t</td>
+        <td>搜索名</td>
+        <td>id</td>
+        <td>标题</td>
+        <td>价格</td>
+        <td>销量</td>
+        <td>网址</td>
+    </tr>
+{% for info in object_list %} {# 循环数据库表内容,object_list 包含所有info对象的变量。 #}
+<tr>
+    <td><img src="static/img/run.png" border=0></td>
+    <td> {{ info.s_name }}</td>
+    <td> {{ info.ids  }}</td>
+    <td> {{ info.titles }}</td>
+    <td> {{ info.price }}</td>
+    <td> {{ info.selas }}</td>
+    <td> {{ info.url }}</td>
+</tr>  {# 数据库表字段 #}
+{% endfor %}
+
+  </table>
+
+<div align="center"><img src="static/img/4.png"></div>  {#---居中---#}
 {% endblock %}

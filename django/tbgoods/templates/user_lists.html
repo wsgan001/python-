@@ -1,0 +1,7 @@
+<form action="/user_list/" method="post">
+        <p>主机:{{ obj.host }}<span>{{ errors.host }}</span></p>
+        <p>端口:{{ obj.port }}<span>{{ errors.port }}</span></p>
+        <p>邮箱:{{ obj.email }}<span>{{ errors.email }}</span></p>
+        <p>手机:{{ obj.mobile }}<span>{{ errors.mobile }}</span></p>
+        <input type="submit" value="submit"/>
+</form>
