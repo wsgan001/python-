@@ -1,10 +1,21 @@
 {% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
 {% block content %}   {# ----------------------继承模板里面的那个地方------------------------------ #}
 <body>
-    <ul>
+<table border="2">
+    <tr>
+          <td>id</td>
+          <td>用户名</td>
+          <td>管理权限</td>
+          <td>编辑</td>
+    </tr>
+    <tr>
         {% for row in li %}
-            <li>{{ row.username }} - {{ row.user_type.caption }} - <a href="/edit-{{ row.id }}">编辑</a></li>
+          <td>{{ row.id }}</td>
+          <td>{{ row.username }}</td>
+          <td>{{ row.user_type.caption }}</td>
+          <td><a href="/edit-{{ row.id }}">编辑</a></td>
         {% endfor %}
-    </ul>
+    </tr>
+    </table>
 </body>
 {% endblock %}

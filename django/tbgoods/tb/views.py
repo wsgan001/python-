@@ -1,12 +1,12 @@
 #coding=utf-8
 from django.views.generic import ListView
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect
-from tb.models import info,UserInfo
+from django.http import HttpResponse,HttpResponseRedirect,StreamingHttpResponse
+from tb.models import info,UserInfo,uploadfile
 import csv
 from django.views.decorators import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from forms import UserInfoModelForm
+from forms import UserInfoModelForm,FileUploadForm
 
 class TbList(ListView):      #引用模板数据库表
     model = info            #对应模板里面info.list.html,路径在模板目录下文件夹tb里面
@@ -14,7 +14,10 @@ class TbList(ListView):      #引用模板数据库表
     template_name = 'tb/info_list.html'   #模板文件
     #paginate_by = 20      #一个页面显示的条目
 
-def downloadfile(request):  #--------------------------------------下载csv
+
+
+
+def downloadfile(request):  #--------------------------------------下载数据库数据为csv
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=tb_info_list.csv'
         writer = csv.writer(response)
@@ -44,7 +47,7 @@ def search_info(request):       #搜索数据
 
 
 def info_page(request):      #数据分页
-    info_list = info.objects.all()  # 获取所有contacts,假设在models.py中已定义了Contacts模型
+    info_list = info.objects.all()  # 获取所有info,假设在models.py中已定义了info模型
     paginator = Paginator(info_list, 20) # 每页25条
 
     page = request.GET.get('page')
@@ -66,7 +69,7 @@ def user_list(request):               #数据库表单操作
     li = UserInfo.objects.all().select_related('user_type')  # 这里只能是外键，多对多字段也不可以
     return render(request,'tb/user_list.html',{'li': li})
 
-def user_edit(request, nid):             #数据库表单操作
+def user_edit(request, nid):             #数据库表单操作，添加修改用户
     # 获取当前id对象的用户信息
     # 显示用户已经存在数据
     if request.method == "GET":
@@ -100,3 +103,60 @@ if obj.is_valid():
     instance.save()     # 当前对象表数据创建
     obj.save_m2m()      # 多对多表数据创建
     # 上面这三句完成的是和上面 obj.save 一样的操作。拆开就可以自定制操作了"""
+
+
+def upload_file(request):         #上传文件
+    """
+    文件接收 view
+    :param request: 请求
+    :return:
+    """
+    if request.method == 'POST':
+        my_form = FileUploadForm(request.POST, request.FILES)
+        if my_form.is_valid():
+          #  f = my_form.cleaned_data['my_file']
+          #  handle_uploaded_file(f)
+            file_model = uploadfile()                 #保存记录到数据库
+            file_model.file = my_form.cleaned_data['my_file']
+            file_model.save()
+        return HttpResponse('Upload Success')
+    else:
+        my_form = FileUploadForm()
+    return render(request, 'tb/upload.html', {'form': my_form})
+
+
+
+"""
+def handle_uploaded_file(f):      #保存上传文件
+    file_name = f.name    #图片名称
+    path="E:\\tae\django\\tbgoods\\upload"
+    file_path='%s/%s'%(path,file_name)
+    with open(file_path, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)"""
+
+class uploadlist(ListView):
+    model = uploadfile          #对应模板里面info.list.html,路径在模板目录下文件夹tb里面
+    context_object_name = 'my_uploadfile'
+    template_name = 'tb/upload_list.html'   #模板文件
+    #paginate_by = 20      #一个页面显示的条目
+
+
+def download_file(request):             #下载文件
+    def file_iterator(file_name, chunk_size=512):
+        with open(file_name,'rb') as f:
+            while True:
+                c = f.read(chunk_size)
+                if c:
+                    yield c
+                else:
+                    break
+   # f=uploadfile.objects.values('file')
+   # uploadfiles=f[0]['file']   ##获取某个字段的值：[{字段：值}]
+   # the_file_name="./"+uploadfiles
+    the_file_name =  "./upload/1.zip"
+    response = StreamingHttpResponse(file_iterator(the_file_name))
+    response['Content-Type'] = 'application/octet-stream'
+    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+
+    return  response

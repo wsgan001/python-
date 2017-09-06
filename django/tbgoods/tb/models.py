@@ -12,7 +12,7 @@ class info(models.Model):
      selas=models.CharField(max_length=200)
      url = models.CharField(max_length=500)
      pi_url = models.CharField(max_length=500)
-     def __str__(self):# 其他属性
+     def __str__(self):# 其他属性： __unicode__ on Python 2
         return self.s_name
 
 class UserType(models.Model):
@@ -25,3 +25,12 @@ class UserInfo(models.Model):
 
 class UserGroup(models.Model):
     name = models.CharField(max_length=32)
+
+class uploadfile(models.Model):
+    """
+    文件接收 Model
+    upload_to：表示文件保存位置
+    """
+   # file = models.FileField(upload_to="D:/BaiduYunDownload/django/tbgoods/upload/%d")
+    file = models.FileField(upload_to="./upload")                       #相对路径./upload/加”.“
+

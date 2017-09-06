@@ -1,0 +1,12 @@
+{% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
+{% block content %}    {# ----------------------继承模板里面的那个地方------------------------------ #}
+<div class="block span6">
+    <p class="block-heading ">进程管理</p>
+    <div class="block-body">
+       <form action="" method="post">{% csrf_token %}
+            <button type="submit" name="s_thread" class="btn btn-primary ">下载文件</button>
+            <div class="clearfix"></div>
+       </form>
+    </div>
+
+{% endblock %}

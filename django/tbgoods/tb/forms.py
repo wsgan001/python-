@@ -106,3 +106,7 @@ class UserInfoModelForm(forms.ModelForm):          #数据库表单
         instance = mf.save(False)
         instance.save()
         mf.save_m2m()"""
+
+
+class FileUploadForm(forms.Form):  #创建表单
+    my_file = forms.FileField()

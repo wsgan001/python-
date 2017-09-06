@@ -1,6 +1,8 @@
 #coding=utf-8
 from django.shortcuts import render
 from django import forms
+from django.http import HttpResponse
+from django.shortcuts import render
 
 class UserInfo(forms.Form):
      email = forms.EmailField(required=True)   #required是否可以为空,如果为False说明可以为空
@@ -35,3 +37,8 @@ def user_lists(request):
             #然后把错误信息返回
             return render(request,'user_list.html',{'obj':obj,'errors':error_msg,})  #然后把对象传给html,在把错误信息传递过去
     return render(request,'user_lists.html',{'obj':obj,})   #然后把对象传给html
+
+
+
+
+

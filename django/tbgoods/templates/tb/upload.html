@@ -1,0 +1,20 @@
+{% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
+{% block content %}    {# ----------------------继承模板里面的那个地方------------------------------ #}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="提交"/>
+</form>
+
+
+</body>
+</html>
+
+{% endblock %}

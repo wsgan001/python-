@@ -16,7 +16,7 @@
     ...
     <form role="search" method="get" id="searchform" action="/tblist_s">
       {% csrf_token %}
-      <li>搜索关键字：</li>
+      <li>搜索关键字：<img src="static/img/loading.gif" alt="加载！" ></li>
       <input type="search" name="q" placeholder="Search" required>
       <input type="submit" , value="搜索"><span class="ion-ios-search-strong"></span></input>
     </form>
