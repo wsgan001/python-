@@ -15,7 +15,7 @@ urlpatterns = [
     url(r'^edit-(\d+)$', user_edit),  #\d+为每个用户的编辑页面
     url(r'^upload$', upload_file),
     url(r'^uplist$', uploadlist.as_view()),
-    url(r'^d_up$', download_file),
-    url(r'^d_up(?P<i>[0-9]+)$', download_file),
+  #  url(r'^d_up$', download_file),
+    url(r'^d_up(\d+)$', download_file),     #一个括号代表一个模式，首先将upload_list.html的/d_up{{ uploadfile.id  }}回调给urls的^d_up(\d+)$'，urls将接收到的值回调给视图，即变量nid={{ uploadfile.id  }}
 
 ]

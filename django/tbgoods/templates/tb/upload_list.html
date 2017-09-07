@@ -2,24 +2,23 @@
 {% block content %}
 
 
-<h2>淘宝商品信息</h2>      {# ----------------------------数据展示模板----------------------------- #}
+<h2>文件信息</h2>      {# ----------------------------数据展示模板----------------------------- #}
 <table border="2">
     <tr>
          <td>t</td>
         <td>id</td>
         <td>文件名</td>
-         <td>download</td>
+         <td><img src="static/img/loading.gif" alt="加载！" ></td>
     </tr>
 {% for uploadfile in object_list %} {# 循环数据库表内容,object_list 包含所有对象的变量。 #}
 <tr>
     <td><img src="static/img/run.png" border=0></td>
     <td> {{ uploadfile.id  }}</td>
     <td> {{ uploadfile.file }}</td>
-    <td><a  href="/d_up">下载</a></td>
+    <td><a  href="/d_up{{ uploadfile.id  }}">下载</a></td>    {# /d_up{{ uploadfile.id  }}将返回给urls匹配 #}
 </tr>  {# 数据库表字段 #}
 {% endfor %}
 
   </table>
-
 <div align="center"><img src="static/img/4.png"></div>  {#---居中---#}
 {% endblock %}

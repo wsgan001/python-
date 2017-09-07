@@ -15,8 +15,6 @@ class TbList(ListView):      #引用模板数据库表
     #paginate_by = 20      #一个页面显示的条目
 
 
-
-
 def downloadfile(request):  #--------------------------------------下载数据库数据为csv
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=tb_info_list.csv'
@@ -34,7 +32,7 @@ def downloadfile(request):  #--------------------------------------下载数据�
            writer.writerow([infos.id, infos.s_name, infos.titles,infos.price, infos.selas,infos.url])  #获取模型所需的字段
         return response
 
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def search_info(request):       #搜索数据
     q = request.GET.get('q') #对应htmlinput当中name属性 --  #request.GET.get('q') 获取到用户提交的搜索关键词。用户通过表单提交的数据 django 为我们保存在 request.GET 里，这是一个类似于 Python 字典的对象，所以我们使用 get 方法从字典里取出键 q 对应的值，即用户的搜索关键词。这里字典的键之所以叫 q 是因为我们的表单中搜索框 input 的 name 属性的值是 q，如果修改了 name 属性的值，那么这个键的名称也要相应修改。
@@ -42,8 +40,11 @@ def search_info(request):       #搜索数据
     if not q:
         error_msg = '请输入关键词'
         return render(request, 'tb/info_list_s.html', {'error_msg': error_msg})
-    info_list = info.objects.filter(s_name__icontains=q)   #用户输入了搜索关键词，我们就通过 filter 方法从数据库里过滤出符合条件的所有数据。这里的过滤条件是 title__icontains=q
+    info_list = info.objects.filter(s_name__icontains=q)   #用户输入了搜索关键词，我们就通过 filter 方法从数据库里过滤出符合条件的所有数据。icontains为模糊匹配，相当于sql的like
     return render(request, 'tb/info_list_s.html', {'error_msg': error_msg, 'info_list':info_list})
+
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 def info_page(request):      #数据分页
@@ -63,7 +64,7 @@ def info_page(request):      #数据分页
     return render(request, 'tb/info_list_page.html', {'infos': infos})
 
 
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 def user_list(request):               #数据库表单操作
     li = UserInfo.objects.all().select_related('user_type')  # 这里只能是外键，多对多字段也不可以
@@ -73,7 +74,7 @@ def user_edit(request, nid):             #数据库表单操作，添加修改�
     # 获取当前id对象的用户信息
     # 显示用户已经存在数据
     if request.method == "GET":
-        user_obj = UserInfo.objects.filter(id=nid).first()
+        user_obj = UserInfo.objects.filter(id=nid).first()    #查找id=nid的一行
         mf = UserInfoModelForm(instance=user_obj)   # 把默认数据传递进去 ，instance  属性，表示与它绑定的模型实例
         return render(request,'tb/user_edit.html',{'mf': mf, 'nid': nid})
     elif request.method == 'POST':
@@ -104,7 +105,7 @@ if obj.is_valid():
     obj.save_m2m()      # 多对多表数据创建
     # 上面这三句完成的是和上面 obj.save 一样的操作。拆开就可以自定制操作了"""
 
-
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def upload_file(request):         #上传文件
     """
     文件接收 view
@@ -123,9 +124,6 @@ def upload_file(request):         #上传文件
     else:
         my_form = FileUploadForm()
     return render(request, 'tb/upload.html', {'form': my_form})
-
-
-
 """
 def handle_uploaded_file(f):      #保存上传文件
     file_name = f.name    #图片名称
@@ -135,6 +133,8 @@ def handle_uploaded_file(f):      #保存上传文件
         for chunk in f.chunks():
             destination.write(chunk)"""
 
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 class uploadlist(ListView):
     model = uploadfile          #对应模板里面info.list.html,路径在模板目录下文件夹tb里面
     context_object_name = 'my_uploadfile'
@@ -142,8 +142,8 @@ class uploadlist(ListView):
     #paginate_by = 20      #一个页面显示的条目
 
 
-def download_file(request):             #下载文件
-    def file_iterator(file_name, chunk_size=512):
+def download_file(request,nid):             #下载文件
+      def file_iterator(file_name, chunk_size=512):
         with open(file_name,'rb') as f:
             while True:
                 c = f.read(chunk_size)
@@ -151,12 +151,22 @@ def download_file(request):             #下载文件
                     yield c
                 else:
                     break
-   # f=uploadfile.objects.values('file')
-   # uploadfiles=f[0]['file']   ##获取某个字段的值：[{字段：值}]
-   # the_file_name="./"+uploadfiles
-    the_file_name =  "./upload/1.zip"
-    response = StreamingHttpResponse(file_iterator(the_file_name))
-    response['Content-Type'] = 'application/octet-stream'
-    response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
 
-    return  response
+      f=uploadfile.objects.values('file')
+      page=int(nid)-int(1)                    #!!!!!!!!!!首先将upload_list.html的/d_up{{ uploadfile.id  }}回调给urls的^d_up(\d+)$'，urls将接收到的值回调给视图，即变量nid={{ uploadfile.id  }}
+      uploadfiles=f[page]['file']   ##获取某个字段的值：[{字段：值}]  ,page根据字段id值nid与数组所要返回的位置差值确定
+      the_file_name="./"+uploadfiles
+   #   the_file_name =  "./upload/1.zip"
+      name = the_file_name.split('/')
+      file_name = name[-1]
+      response = StreamingHttpResponse(file_iterator(the_file_name))        #路径文件
+      response['Content-Type'] = 'application/octet-stream'
+      response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name.encode("utf-8"))  #中文显示，文件名
+      return  response
+
+"""
+下面是URLconf 解析器使用的算法，针对正则表达式中的命名组和非命名组：
+1. 如果有命名参数，则使用这些命名参数，忽略非命名参数。
+2. 否则，它将以位置参数传递所有的非命名参数。"""
+
+#------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
