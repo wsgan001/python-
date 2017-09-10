@@ -15,6 +15,32 @@ class info(models.Model):
      def __str__(self):# 其他属性： __unicode__ on Python 2
         return self.s_name
 
+class pl(models.Model):             #淘宝评论信息
+     itemid = models.CharField(max_length=200)
+     user = models.CharField(max_length=50)
+     sku = models.CharField(max_length=500)
+     date= models.CharField(max_length=200)
+     content=models.CharField(max_length=5000)
+
+class jd_info(models.Model):
+      s_name= models.CharField(max_length=200)
+      ids= models.CharField(max_length=200)
+      store= models.CharField(max_length=200)
+      titles= models.CharField(max_length=500)
+      price= models.CharField(max_length=200)
+      url= models.CharField(max_length=200)
+
+class jd_pl(models.Model):
+   ids= models.CharField(max_length=200)
+   selas= models.CharField(max_length=200)
+   user= models.CharField(max_length=200)
+   titles= models.CharField(max_length=500)
+   sku= models.CharField(max_length=500)
+   date= models.CharField(max_length=200)
+   content= models.CharField(max_length=5000)
+
+
+
 class UserType(models.Model):
     caption = models.CharField(max_length=32)
 

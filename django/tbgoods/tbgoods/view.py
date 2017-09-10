@@ -40,5 +40,3 @@ def user_lists(request):
 
 
 
-
-

@@ -1,0 +1,52 @@
+{% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
+{% block content %}
+
+
+<h2>拳皇gif图片:</h2>      {# ----------------------------数据展示模板----------------------------- #}
+<h2>------------------------------------------------------------------------------------------------------------------</h2>
+<table border="2" bgcolor="#F0F8FF" >
+{% for i in img %} {# 循环数据库表内容,object_list 包含所有对象的变量。 #}
+  <tr>
+    <td><img src="{{i}}" ></td>
+    <td style="color:blue">{{i}}</td>
+    <td><a href="/d_qh{{i}}">下载</a></td>
+   </tr>
+{% endfor %}
+    </table>
+<h3>------------------------------------------------------------------------------------------------------------------</h3>
+
+
+<nav aria-label="Page navigation">        {# --------------------分页------------------ #}
+  <ul class="pagination">
+      {% if img.has_previous %}         {# 如果infos有上一页，，显示上一页箭头且修改地址#}
+          <td>
+              <a href="?page={{ img.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+          </td>
+      {% endif %}
+
+
+      {%  for pg in img.paginator.page_range %}             {# ---------page_range页码的范围-------- #}
+                   {# - {% circle_page infos.number pg %}--------page_range页码的范围：传入当前页码和循环页码---引用pagetag-------------------另一种方法-- #}
+           {% if img.number == pg %}
+               <td class="active"><a href="?page={{ pg}}">-{{ pg }}-</a></td>    {# ---------当前页码高亮-------- #}
+        {% else %}
+               <td><a href="?page={{ pg}}">-{{ pg }}-</a></td>
+        {% endif %}
+      {% endfor %}
+
+
+      {% if img.has_next %}                  {# 如果infos有下一页，，显示下一页箭头且修改地址 #}
+        <td>
+          <a href="?page={{ img.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </td>
+    {% endif %}
+  </ul>
+</nav>
+
+
+
+{% endblock %}

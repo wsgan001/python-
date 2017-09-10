@@ -1,0 +1,53 @@
+{% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
+{% block content %}
+
+
+
+  {# -------------------------------搜索表单------------------------------ #}
+  <div id="header-search-box">
+    ...
+    <form role="search" method="get" id="searchform" action="/pllist_s">
+      {% csrf_token %}
+        <li>搜索关键字：<img src="static/img/loading.gif" alt="加载！" ></li>
+      <input type="search" name="q" placeholder="Search" required>
+      <input type="submit" , value="搜索"><span class="ion-ios-search-strong"></span></input>
+    </form>
+    ...
+  </div>
+
+
+<h2>淘宝商品评论信息:</h2>      {# ----------------------------数据展示模板----------------------------- #}
+<table border="2">
+    <tr>
+         <td>t</td>
+        <td>id</td>
+        <td>itemid</td>
+        <td>用户</td>
+        <td>套餐</td>
+        <td>评论日期</td>
+        <td>评论内容</td>
+    </tr>
+{% block main %}
+    {% if error_msg %}
+        <p>{{ error_msg }}</p>
+        {% endif %}
+{% for pl in pl_list %} {# 循环数据库表内容,object_list 包含所有info对象的变量。 #}
+<tr>
+    <td><img src="static/img/run.png" border=0></td>
+    <td> {{ pl.id }}</td>
+    <td> {{ pl.itemid  }}</td>
+    <td> {{ pl.user }}</td>
+    <td> {{ pl.sku }}</td>
+    <td> {{ pl.date }}</td>
+    <td> {{ pl.content }}</td>
+</tr>  {# 数据库表字段 #}
+
+    {% empty %}
+    <div class="no-post">暂时还没有数据！</div>
+  {% endfor %}
+{% endblock main %}
+
+  </table>
+
+<div align="center"><img src="static/img/4.png"></div>  {#---居中---#}
+{% endblock %}

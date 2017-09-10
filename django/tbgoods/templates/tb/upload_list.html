@@ -15,7 +15,7 @@
     <td><img src="static/img/run.png" border=0></td>
     <td> {{ uploadfile.id  }}</td>
     <td> {{ uploadfile.file }}</td>
-    <td><a  href="/d_up{{ uploadfile.id  }}">下载</a></td>    {# /d_up{{ uploadfile.id  }}将返回给urls匹配 #}
+    <td><a  href="{% url 'd_ups' uploadfile.id  %}">下载</a></td>    {# 另一种写法：“/d_up{{ uploadfile.id  }}”将返回给urls匹配，'d_ups'为urls的name #}
 </tr>  {# 数据库表字段 #}
 {% endfor %}
 
