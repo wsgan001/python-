@@ -6,7 +6,7 @@
   {# -------------------------------搜索表单------------------------------ #}
   <div id="header-search-box">
     ...
-    <form role="search" method="get" id="searchform" action="/jdlist_s">
+    <form role="search" method="get" id="searchform" action="/bjlist_s">
       {% csrf_token %}
         <li>搜索关键字：<img src="static/img/loading.gif" alt="加载！" ></li>
       <input type="search" name="q" placeholder="Search" required>
@@ -16,33 +16,41 @@
   </div>
 
 
-<h2>京东商品信息：</h2>      {# ----------------------------数据展示模板----------------------------- #}
+<h2>淘宝商品信息</h2>      {# ----------------------------数据展示模板----------------------------- #}
 <table border="2">
     <tr>
          <td>t</td>
-        <td>搜索名</td>
+        <td>女排名</td>
+        <td>name</td>
         <td>id</td>
-        <td>店铺</td>
-        <td>标题</td>
-        <td>价格</td>
-        <td>网址</td>
-         <td>图</td>
+        <td>排名</td>
+        <td>follower</td>
+        <td>swatch</td>
+        <td>建立时间</td>
+        <td>最后时间</td>
+        <td>最后访问</td>
+        <td>其他</td>
+        <td>img</td>
     </tr>
 
 {% block main %}
     {% if error_msg %}
         <p>{{ error_msg }}</p>
         {% endif %}
-{% for jd_info in jd_info_list %}             {# -------------循环数据库表内容：以关键词进行索引------------ #}
+{% for bj in bj_list %}             {# -------------循环数据库表内容：以关键词进行索引------------ #}
 <tr>
     <td><img src="static/img/run.png" border=0></td>
-    <td> {{ jd_info.s_name }}</td>
-    <td> {{ jd_info.ids  }}</td>
-    <td> {{ jd_info.store }}</td>
-    <td> {{ jd_info.titles }}</td>
-    <td> {{ jd_info.price }}</td>
-    <td> {{ jd_info.url }}</td>
-    <td><img src="{{ jd_info.pi_url }}" ></td>
+    <td> {{ bj.bj_f_rank }}</td>
+    <td> {{ bj.bj_name  }}</td>
+    <td> {{ bj.bj_id }}</td>
+    <td> {{ bj.bj_rank_all }}</td>
+    <td> {{ bj.bj_follower }}</td>
+    <td> {{ bj.bj_swatch }}</td>
+    <td> {{ bj.bj_last_time }}</td>
+    <td> {{ bj.bj_last_visit }}</td>
+    <td> {{ bj.bj_last_up }}</td>
+    <td> {{ bj.bj_info_bs }}</td>
+    <td><img src="{{ bj.img }}" width="80" height="80"></td>
 </tr>                             {# 数据库表字段 #}
 
     {% empty %}

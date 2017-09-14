@@ -33,6 +33,7 @@
         <td>价格</td>
         <td>销量</td>
         <td>网址</td>
+        <td>图</td>
     </tr>
 {% for info in infos %} {# 循环数据库表内容,object_list 包含所有info对象的变量。 #}
 <tr>
@@ -43,6 +44,7 @@
     <td> {{ info.price }}</td>
     <td> {{ info.selas }}</td>
     <td> {{ info.url }}</td>
+    <td><img src="{{ info.pi_url }}" width="80" height="80"></td>
 </tr>  {# 数据库表字段 #}
 {% endfor %}
              </table>
