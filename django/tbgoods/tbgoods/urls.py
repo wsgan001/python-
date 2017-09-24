@@ -6,7 +6,7 @@ from tb.view import  user_list, user_edit ,upload_file,download_file ,uploadlist
 from django.conf import settings
 from view import user_lists
 from img import img_qh,download_qh
-
+from video import video_1
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^d_up(\d+)$', download_file,name = "d_ups"),         #一个括号代表一个模式，首先将upload_list.html的/d_up{{ uploadfile.id  }}回调给urls的^d_up(\d+)$'，urls将接收到的值回调给视图，即变量nid={{ uploadfile.id  }}
     url(r'^img_qh$', img_qh),
     url(r'^d_qh(\S+)$', download_qh,name = "d_qh"),   #\S+，非空字符
+     url(r'^v_1$', video_1),
 
 
 ]

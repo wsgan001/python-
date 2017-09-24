@@ -41,7 +41,6 @@ class bjAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 
-
 admin.site.register(info,infoAdmin)
 admin.site.register(UserInfo,UserInfoAdmin)
 admin.site.register(uploadfile,uploadfileAdmin)

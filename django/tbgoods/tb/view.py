@@ -12,7 +12,8 @@ from forms import UserInfoModelForm,FileUploadForm
 
 def user_list(request):               #数据库表单操作
     li = UserInfo.objects.all().select_related('user_type')  # 这里只能是外键，多对多字段也不可以
-    return render(request,'tb/user_list.html',{'li': li})
+    lis= UserInfo.objects.with_counts()
+    return render(request,'tb/user_list.html',{'li': li,'lis': lis})
 
 def user_edit(request, nid):             #数据库表单操作，添加修改用户
     # 获取当前id对象的用户信息

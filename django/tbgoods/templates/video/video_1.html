@@ -1,0 +1,60 @@
+{% extends "base.html" %}  {# ----------------------extends继承模板------------------------------ #}
+{% load pagetag %}          {# ----------------------将会载入给定模块名中的标签/过滤器------------------------------ #}
+{% block content %}  {# block 标签是可以被继承者们替换掉的部分。所有的  block  标签告诉模板引擎，子模板可以重载这些部分。此html 中继承 base.html，并替换了base里面 的‘block content’ #}
+
+
+<script src="/static/js/me/v_1.js"></script>
+
+
+          {#    如果MP4格式的视频没有画面，用网上的格式工厂转为avc(h264)，就可以了  #}
+<div>
+<video width="720" height="480" id="video1" controls="controls" onseeking="isSeeking()" onseeked="isSeeking()">
+      <source src="static/img/video/1.mp4" type="video/mp4"></video>
+   <li><a href="static/img/video/1.mp4">1</a></li>
+    <p>试着在视频中寻址：<span id="span1"></span></p>
+      </div>
+
+
+
+
+
+
+
+
+
+<nav aria-label="Page navigation">        {# --------------------分页------------------ #}
+  <ul class="pagination">
+      {% if bjs.has_previous %}         {# 如果bjs有上一页，，显示上一页箭头且修改地址#}
+          <td>
+              <a href="?page={{ bjs.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+          </td>
+      {% endif %}
+
+
+      {%  for pg in bjs.paginator.page_range %}             {# ---------page_range页码的范围-------- #}
+                   {# - {% circle_page bjs.number pg %}--------page_range页码的范围：传入当前页码和循环页码---引用pagetag-------------------另一种方法-- #}
+           {% if bjs.number == pg %}
+               <td class="active"><a href="?page={{ pg}}">-{{ pg }}-</a></td>    {# ---------当前页码高亮-------- #}
+        {% else %}
+               <td><a href="?page={{ pg}}">-{{ pg }}-</a></td>
+        {% endif %}
+      {% endfor %}
+
+
+      {% if bjs.has_next %}                  {# 如果bjs有下一页，，显示下一页箭头且修改地址 #}
+        <td>
+          <a href="?page={{ bjs.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </td>
+    {% endif %}
+  </ul>
+</nav>
+
+<div align="center"><img src="static/img/4.png"></div>  {#---居中---#}
+
+
+{% endblock %}
+

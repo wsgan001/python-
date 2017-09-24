@@ -5,17 +5,23 @@
     <tr>
           <td>id</td>
           <td>用户名</td>
+         <td>email</td>
           <td>管理权限</td>
           <td>编辑</td>
+          <td>count</td>
     </tr>
+
+        {% for row in lis %}
     <tr>
-        {% for row in li %}
           <td>{{ row.id }}</td>
           <td>{{ row.username }}</td>
+          <td>{{ row.email }}</td>
           <td>{{ row.user_type.caption }}</td>
           <td><a href="/edit-{{ row.id }}">编辑</a></td>
-        {% endfor %}
+         <td>{{ row.num_responses }}</td>
     </tr>
+        {% endfor %}
+
     </table>
 </body>
 {% endblock %}
