@@ -62,9 +62,9 @@ def upload_file(request):         #上传文件
         if my_form.is_valid():
           #  f = my_form.cleaned_data['my_file']
           #  handle_uploaded_file(f)
-            file_model = uploadfile()                 #保存记录到数据库
-            file_model.file = my_form.cleaned_data['my_file']  #不管表单提交的是什么数据，一旦通过调用 is_valid() 成功验证（ is_valid() 返回 True ），验证后的表单数据将位于 form.cleaned_data字典中。这些数据已经为你转换好为Python 的类型。
-            file_model.save()
+            filemodel = uploadfile()                 #保存记录到数据库
+            filemodel.filepath = my_form.cleaned_data['my_file']  #不管表单提交的是什么数据，一旦通过调用 is_valid() 成功验证（ is_valid() 返回 True ），验证后的表单数据将位于 form.cleaned_data字典中。这些数据已经为你转换好为Python 的类型。
+            filemodel.save()
         return HttpResponse('Upload Success')
     else:
         my_form = FileUploadForm()
@@ -97,9 +97,9 @@ def download_file(request,nid):             #下载文件
                 else:
                     break
 
-      f=uploadfile.objects.values('file')  #获取某个字段的所有值：[{字段：值}]
+      f=uploadfile.objects.values('filepath')  #获取某个字段的所有值：[{字段：值}]
       page=int(nid)-int(1)                    #!!!!!!!!!!首先将upload_list.html的/d_up{{ uploadfile.id  }}回调给urls的^d_up(\d+)$'，urls将接收到的值回调给视图，即变量nid={{ uploadfile.id  }}
-      uploadfiles=f[page]['file']   #  page根据字段id值nid与数组所要返回的位置差值确定
+      uploadfiles=f[page]['filepath']   #  page根据字段id值nid与数组所要返回的位置差值确定
       the_file_name="./"+uploadfiles
    #   the_file_name =  "./upload/1.zip"
       name = the_file_name.split('/')

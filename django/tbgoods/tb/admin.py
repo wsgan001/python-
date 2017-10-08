@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from tb.models import info,UserInfo,uploadfile,pl,jd_info,jd_pl,bj
+from tb.models import info,UserInfo,uploadfile,pl,jd_info,jd_pl,bj,job_info
 
 class infoAdmin(admin.ModelAdmin):   #定义了一个 ContactAdmin 类，用以说明管理页面的显示格式。
     list_display = ('s_name','ids','titles','price','selas','url','pi_url')        # 页面显示字段
@@ -16,8 +16,8 @@ class UserInfoAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 class uploadfileAdmin(admin.ModelAdmin):
-    list_display = ('file',)
-    search_fields = ('file',)
+    list_display = ('filepath',)
+    search_fields = ('filepath',)
     list_per_page = 20
 
 class plAdmin(admin.ModelAdmin):   #定义了一个 ContactAdmin 类，用以说明管理页面的显示格式。
@@ -40,6 +40,10 @@ class bjAdmin(admin.ModelAdmin):
     search_fields = ('bj_name','bj_id')        #搜索字段
     list_per_page = 20
 
+class job_infoAdmin(admin.ModelAdmin):
+    list_display = ('s_name','time','name','ares','money','company','people','fuli','describes','url')        # 页面显示字段
+    search_fields = ('s_name','name','ares')        #搜索字段
+    list_per_page = 20
 
 admin.site.register(info,infoAdmin)
 admin.site.register(UserInfo,UserInfoAdmin)
@@ -48,3 +52,4 @@ admin.site.register(pl,plAdmin)
 admin.site.register(jd_info,jd_infoAdmin)
 admin.site.register(jd_pl,jd_plAdmin)
 admin.site.register(bj,bjAdmin)
+admin.site.register(job_info,job_infoAdmin)

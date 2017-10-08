@@ -5,6 +5,22 @@ from django.db import models
 from django.forms import ModelForm
 
 #-------------------------------------------------------------------------------------------------------------------------#-------------------------------------------------------------------------------------------------------------------------
+class plManager(models.Manager):          #多表关联查询
+   def with_counts(self):
+     from django.db import connection
+     cursor = connection.cursor()
+     cursor.execute("""
+          SELECT p.id,p.itemid,p.user,p.sku,p.date,p.content,i.titles
+               from tb_pl p
+               left join tb_info i on i.ids=p.itemid
+                         """)
+     result_list = []
+     for row in cursor.fetchall():
+       ps = self.model(id=row[0], itemid=row[1], user=row[2],sku=row[3],date=row[4],content=row[5])   #管理器方法可以访问 self.model来得到它所用到的模型类
+       ps.titles = row[6]          #列表中的每个对象都多了一个名为 titles的属性
+       result_list.append(ps)
+     return result_list             #pl.objects.with_counts() 得到所有含有titles属性的 OpinionPoll对象
+
 class info(models.Model):
      s_name = models.CharField(max_length=200)
      ids = models.CharField(max_length=50)
@@ -22,6 +38,8 @@ class pl(models.Model):             #淘宝评论信息
      sku = models.CharField(max_length=500)
      date= models.CharField(max_length=200)
      content=models.CharField(max_length=5000)
+    #objects = models.Manager()  #原生管理器，默认隐藏，可不用写出
+     objects = plManager()    #调用自定义管理器，查询相应的条件数据
 
 #-------------------------------------------------------------------------------------------------------------------------#-------------------------------------------------------------------------------------------------------------------------
 
@@ -94,7 +112,7 @@ class uploadfile(models.Model):
     upload_to：表示文件保存位置
     """
    # file = models.FileField(upload_to="D:/BaiduYunDownload/django/tbgoods/upload/%d")
-    file = models.FileField(upload_to="./upload")                       #相对路径./upload/加”.“
+    filepath = models.FileField(upload_to="./upload")                       #相对路径./upload/加”.“
 
 #-------------------------------------------------------------------------------------------------------------------------#-------------------------------------------------------------------------------------------------------------------------
 
@@ -114,4 +132,17 @@ class bj(models.Model):
 
 #-------------------------------------------------------------------------------------------------------------------------#-------------------------------------------------------------------------------------------------------------------------
 
+class job_info(models.Model):
+      s_name= models.CharField(max_length=200)
+      time= models.CharField(max_length=200)
+      name= models.CharField(max_length=200)
+      ares= models.CharField(max_length=200)
+      money= models.CharField(max_length=200)
+      company= models.CharField(max_length=500)
+      people= models.CharField(max_length=200)
+      fuli = models.CharField(max_length=5000)
+      describes = models.CharField(max_length=5000)
+      url = models.CharField(max_length=500)
+
+ #-------------------------------------------------------------------------------------------------------------------------#-------------------------------------------------------------------------------------------------------------------------
 

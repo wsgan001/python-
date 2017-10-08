@@ -1,7 +1,7 @@
 #coding=utf-8
 from django.conf.urls import include, url
 from django.contrib import admin
-from tb.views import  TbList ,download_info,search_info,info_page,download_pl,search_pl,pl_page,download_jd_info,search_jd_info,jd_info_page,download_jd_pl,search_jd_pl,jd_pl_page ,download_bj,search_bj,bj_page                                           #引用的模板
+from tb.views import  TbList ,download_info,search_info,info_page,download_pl,search_pl,pl_page,download_jd_info,search_jd_info,jd_info_page,download_jd_pl,search_jd_pl,jd_pl_page ,download_bj,search_bj,bj_page ,download_job_info, search_job_info,job_info_page                                         #引用的模板
 from tb.view import  user_list, user_edit ,upload_file,download_file ,uploadlist           #引用的模板
 from django.conf import settings
 from view import user_lists
@@ -31,7 +31,10 @@ urlpatterns = [
     url(r'^bjlist_s$', search_bj),     #关键搜索
     url(r'^bjlist_page$',bj_page),   #数据分页
  #---------------------------------------------
-
+    url(r'^download_job_info/$', download_job_info),   #def
+    url(r'^joblist_s$', search_job_info),     #关键搜索
+    url(r'^joblist_page$', job_info_page),   #数据分页
+  #---------------------------------------------
     url(r'^user_lists$', user_lists),
     url(r'^user_list$', user_list),
     url(r'^edit-(\d+)$', user_edit),  #正则表达式（\d+）为每个用户的编辑页面,----数字

@@ -29,20 +29,24 @@
          <td>t</td>
         <td>id</td>
         <td>ids</td>
+        <td>titles</td>
         <td>用户</td>
         <td>套餐</td>
         <td>评论日期</td>
         <td>评论内容</td>
+
     </tr>
 {% for pl in pls %} {# 循环数据库表内容,object_list 包含所有info对象的变量。 #}
 <tr>
     <td><img src="static/img/run.png" border=0></td>
     <td> {{ pl.id }}</td>
     <td> {{ pl.itemid  }}</td>
+    <td> {{ pl.titles }}</td>
     <td> {{ pl.user }}</td>
     <td> {{ pl.sku }}</td>
     <td> {{ pl.date }}</td>
     <td> {{ pl.content }}</td>
+
 </tr>  {# 数据库表字段 #}
 {% endfor %}
              </table>

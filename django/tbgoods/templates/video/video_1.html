@@ -8,15 +8,19 @@
 
           {#    如果MP4格式的视频没有画面，用网上的格式工厂转为avc(h264)，就可以了  #}
 <div>
-<video width="720" height="480" id="video1" controls="controls" onseeking="isSeeking()" onseeked="isSeeking()">
-      <source src="static/img/video/1.mp4" type="video/mp4"></video>
-   <li><a href="static/img/video/1.mp4">1</a></li>
-    <p>试着在视频中寻址：<span id="span1"></span></p>
+   {#  <video width="720" height="480" id="video1" controls="controls" onseeking="isSeeking()" onseeked="isSeeking()"> #}
+   {#   <source src="static/img/video/1.mp4" type="video/mp4"></video>   #}
+ {#  <li><a href="static/img/video/1.mp4">1</a></li>   #}
+ {#   <p>试着在视频中寻址：<span id="span1"></span></p>   #}
+      </div>
+{% for i in nums %}
+<div>
+<video width="720" height="480"  controls="controls" >
+      <source src="static/img/video/{{ i }}.mp4" type="video/mp4"></video>
+   <li><a href="static/img/video/{{ i }}.mp4">{{ i }}</a></li>
       </div>
 
-
-
-
+{% endfor %}
 
 
 
@@ -24,18 +28,18 @@
 
 <nav aria-label="Page navigation">        {# --------------------分页------------------ #}
   <ul class="pagination">
-      {% if bjs.has_previous %}         {# 如果bjs有上一页，，显示上一页箭头且修改地址#}
+      {% if nums.has_previous %}         {# 如果bjs有上一页，，显示上一页箭头且修改地址#}
           <td>
-              <a href="?page={{ bjs.previous_page_number }}" aria-label="Previous">
+              <a href="?page={{ nums.previous_page_number }}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
               </a>
           </td>
       {% endif %}
 
 
-      {%  for pg in bjs.paginator.page_range %}             {# ---------page_range页码的范围-------- #}
+      {%  for pg in nums.paginator.page_range %}             {# ---------page_range页码的范围-------- #}
                    {# - {% circle_page bjs.number pg %}--------page_range页码的范围：传入当前页码和循环页码---引用pagetag-------------------另一种方法-- #}
-           {% if bjs.number == pg %}
+           {% if nums.number == pg %}
                <td class="active"><a href="?page={{ pg}}">-{{ pg }}-</a></td>    {# ---------当前页码高亮-------- #}
         {% else %}
                <td><a href="?page={{ pg}}">-{{ pg }}-</a></td>
@@ -43,9 +47,9 @@
       {% endfor %}
 
 
-      {% if bjs.has_next %}                  {# 如果bjs有下一页，，显示下一页箭头且修改地址 #}
+      {% if nums.has_next %}                  {# 如果bjs有下一页，，显示下一页箭头且修改地址 #}
         <td>
-          <a href="?page={{ bjs.next_page_number }}" aria-label="Next">
+          <a href="?page={{ nums.next_page_number }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </td>

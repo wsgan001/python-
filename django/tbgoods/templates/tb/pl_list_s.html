@@ -26,6 +26,7 @@
         <td>套餐</td>
         <td>评论日期</td>
         <td>评论内容</td>
+
     </tr>
 {% block main %}
     {% if error_msg %}
@@ -40,6 +41,7 @@
     <td> {{ pl.sku }}</td>
     <td> {{ pl.date }}</td>
     <td> {{ pl.content }}</td>
+
 </tr>  {# 数据库表字段 #}
 
     {% empty %}

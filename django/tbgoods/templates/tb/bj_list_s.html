@@ -30,6 +30,7 @@
         <td>最后时间</td>
         <td>最后访问</td>
         <td>其他</td>
+        <td>网址</td>
         <td>img</td>
     </tr>
 
@@ -50,6 +51,7 @@
     <td> {{ bj.bj_last_visit }}</td>
     <td> {{ bj.bj_last_up }}</td>
     <td> {{ bj.bj_info_bs }}</td>
+    <td><a href="{{ bj.bj_url }}">主页</a></td>
     <td><img src="{{ bj.img }}" width="80" height="80"></td>
 </tr>                             {# 数据库表字段 #}
 

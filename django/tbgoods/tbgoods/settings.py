@@ -26,7 +26,7 @@ SECRET_KEY = '*8*@9e&ma#e(%q!*-z_q0=3*sz(zh+es9^#l@3hb!ea^642&9*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.31.132','192.168.1.114']   #局域网加ip
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.31.132','192.168.1.114','10.0.1.23']   #局域网加ip
 
 
 # Application definition
