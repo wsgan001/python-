@@ -9,6 +9,7 @@
         <td>id</td>
         <td>文件名</td>
          <td><img src="static/img/loading.gif" alt="加载！" ></td>
+        <td>创建时间</td>
     </tr>
 {% for uploadfile in object_list %} {# 循环数据库表内容,object_list 包含所有对象的变量。 #}
 <tr>
@@ -16,6 +17,7 @@
     <td> {{ uploadfile.id  }}</td>
     <td> {{ uploadfile.filepath }}</td>
     <td><a  href="{% url 'd_ups' uploadfile.id  %}">下载</a></td>    {# 另一种写法：“/d_up{{ uploadfile.id  }}”将返回给urls匹配，'d_ups'为urls的name #}
+    <td> {{ uploadfile.infoDate }}</td>
 
 
 </tr>  {# 数据库表字段 #}

@@ -39,6 +39,7 @@
         <td>其他</td>
         <td>网址</td>
         <td>img</td>
+        <td>创建时间</td>
     </tr>
 {% for bj in bjs %} {# 循环数据库表内容,object_list 包含所有bj对象的变量。 #}
 <tr>
@@ -55,6 +56,7 @@
     <td> {{ bj.bj_info_bs }}</td>
     <td><a href=" {{ bj.bj_url }}">主页</a></td>
     <td><img src="{{ bj.img }}" width="80" height="80"></td>
+    <td> {{ bj.bj_infoDate }}</td>
 </tr>  {# 数据库表字段 #}
 {% endfor %}
              </table>

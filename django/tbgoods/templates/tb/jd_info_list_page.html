@@ -34,6 +34,7 @@
         <td>价格</td>
         <td>网址</td>
         <td>图</td>
+        <td>创建时间</td>
     </tr>
 {% for jd_info in jd_infos %} {# 循环数据库表内容,object_list 包含所有info对象的变量。 #}
 <tr>
@@ -45,6 +46,7 @@
     <td> {{ jd_info.price }}</td>
     <td> {{ jd_info.url }}</td>
     <td><img src="{{ jd_info.pi_url }}" ></td>
+    <td> {{ jd_info.infoDate }}</td>
 </tr>  {# 数据库表字段 #}
 {% endfor %}
              </table>

@@ -27,6 +27,7 @@
         <td>价格</td>
         <td>网址</td>
          <td>图</td>
+         <td>创建时间</td>
     </tr>
 
 {% block main %}
@@ -43,6 +44,7 @@
     <td> {{ jd_info.price }}</td>
     <td> {{ jd_info.url }}</td>
     <td><img src="{{ jd_info.pi_url }}" ></td>
+    <td> {{ jd_info.infoDate }}</td>
 </tr>                             {# 数据库表字段 #}
 
     {% empty %}

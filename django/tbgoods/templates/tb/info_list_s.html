@@ -27,6 +27,7 @@
         <td>销量</td>
         <td>网址</td>
          <td>图</td>
+        <td>创建时间</td>
     </tr>
 
 {% block main %}
@@ -43,6 +44,7 @@
     <td> {{ info.selas }}</td>
     <td> {{ info.url }}</td>
     <td><img src="{{ info.pi_url }}" width="80" height="80"></td>
+    <td> {{ info.infoDate }}</td>
 </tr>                             {# 数据库表字段 #}
 
     {% empty %}

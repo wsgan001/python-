@@ -34,7 +34,7 @@
         <td>套餐</td>
         <td>评论日期</td>
         <td>评论内容</td>
-
+        <td>创建时间</td>
     </tr>
 {% for pl in pls %} {# 循环数据库表内容,object_list 包含所有info对象的变量。 #}
 <tr>
@@ -46,7 +46,7 @@
     <td> {{ pl.sku }}</td>
     <td> {{ pl.date }}</td>
     <td> {{ pl.content }}</td>
-
+    <td> {{ pl.infoDate }}</td>
 </tr>  {# 数据库表字段 #}
 {% endfor %}
              </table>

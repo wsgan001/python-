@@ -30,6 +30,7 @@
         <td>福利</td>
         <td>职位描述</td>
         <td>网址</td>
+         <td>创建时间</td>
     </tr>
     {% block main %}
     {% if error_msg %}
@@ -47,7 +48,8 @@
     <td> {{ job_info.people }}</td>
     <td> {{ job_info.fuli }}</td>
     <td> {{ job_info.describes }}</td>
-    <td> {{ job_info.url }}</td>
+    <td><a href="{{ job_info.url }}">网站</a></td>
+    <td> {{ job_info.infoDate }}</td>
 </tr>                             {# 数据库表字段 #}
 
     {% empty %}
