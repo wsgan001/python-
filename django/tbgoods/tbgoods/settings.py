@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '*8*@9e&ma#e(%q!*-z_q0=3*sz(zh+es9^#l@3hb!ea^642&9*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.31.132','192.168.1.114','10.0.1.23']   #局域网加ip
 
@@ -38,7 +38,9 @@ INSTALLED_APPS = [                      #模型-------------------------
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+        'chatroom',
     'tb',
+
 ]
 
 MIDDLEWARE_CLASSES = [                    #   中间件的key为MIDDLEWARE_CLASSES, 1.9之后，为MIDDLEWARE。所以在开发环境和其他环境的版本不一致时，要特别小心，会有坑。需要在settings里面把MIDDLEWARE改为MIDDLEWARE_CLASSES 即可

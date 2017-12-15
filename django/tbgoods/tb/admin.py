@@ -42,7 +42,7 @@ class bjAdmin(admin.ModelAdmin):
 
 class job_infoAdmin(admin.ModelAdmin):
     list_display = ('s_name','time','name','ares','money','company','people','fuli','describes','url','infoDate')        # 页面显示字段
-    search_fields = ('s_name','name','ares','infoDate')        #搜索字段
+    search_fields = ('s_name','name','ares','infoDate','fuli','describes')        #搜索字段
     list_per_page = 20
 
 admin.site.register(info,infoAdmin)

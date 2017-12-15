@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{{article.title}}{% endblock %}
+{% block content %}
+{% if article %}
+<!--title-->
+<div class="page-header ">
+  <h1 align="center">{{article.title}}
+      {% for tag in article.tags.all %}
+      <a href="/blog/tag/{{tag.id}}"><span class="label label-default">{{tag}}</span></a>
+      {% endfor %}
+  </h1>
+</div>
+<!--content-->
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body" id="article-body">
+      {{ article.content|safe|linebreaks }}
+      <footer>at <cite title="Source Title">{{article.time}}</cite></footer>
+  </div>
+</div>
+<!--comment-->
+{% if comments %}
+<div class="panel panel-default col-md-10 col-md-offset-1" id="comment-box">
+    {% for comment in comments %}
+    <div class="panel-body">
+          <h4>{{comment.content}}</h4>
+          <h5>by {{comment.name}} at {{comment.time}}</h5>
+    </div>
+    <hr>
+    {% endfor %}
+</div>
+{% else %}
+    <p class="text">暂时还没有评论~</p>
+{% endif %}
+<!--post comment-->
+<div class="panel panel-default col-md-10 col-md-offset-1">
+  <div class="panel-body">
+    <form method="POST" id="comForm">{% csrf_token %}
+      {% if user.is_authenticated %}
+          <div class="form-group">
+            <label for="exampleInputEmail1">邮箱</label>
+            <input type="email" name="email" value="{{user.email}}" class="form-control" id="exampleInputEmail1">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">姓名</label>
+            <input type="text" name="name" value="{{user.username}}" class="name-input form-control" id="exampleInputName1">
+          </div>
+      {% else %}
+          <div class="form-group">
+            <label for="exampleInputEmail">邮箱</label>
+            <input type="email" name="email" class="form-control" id="exampleInputEmail">
+            </div>
+          <div class="form-group">
+            <label for="exampleInputName">姓名</label>
+            <input type="text" name="name" class="name-input form-control" id="exampleInputName">
+          </div>
+      {% endif %}
+      <div class="form-group">
+        <label for="exampleInputText">评论</label>
+        <textarea class="form-control" name="content" id="exampleInputText" placeholder=""></textarea>
+      </div>
+        <input type="hidden" name="post_type" value="post_comment">
+        <input type="hidden" name="article_id" value="{{article.id}}">
+      <button type="submit" class="btn btn-default">发布</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#comForm").submit(
+      function(event) {
+      /* Act on the event */
+        $.post('/blog/post/', 
+        $('#comForm').serialize(),
+        function(data) {
+        /*optional stuff to do after success */
+        $(".form-control").not('.name-input').val("");  //消息发送成功后清空内容框  
+        htmlstr = "<div class='panel-body'><h4>"+data['content']+"</h4><h5>"+data['author']+"at"+data['time']+"</h5></div><hr>"
+        $("#comment-box").append(htmlstr); //add new message
+      });
+        return false;
+    });
+
+  });
+</script>
+{% endblock %}

@@ -7,10 +7,12 @@ from django.conf import settings
 from view import user_lists
 from img import img_qh,download_qh
 from video import video_1
+from chatroom.views import index,post
+from tb.ajax import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', admin.site.urls),
+   # url(r'^$', admin.site.urls),
     #------------------------------------
     url(r'^tblist$', TbList.as_view()),                                 #---------------------class需要加.as_view()，def不用
     url(r'^download_info/$', download_info),   #def
@@ -44,6 +46,12 @@ urlpatterns = [
     url(r'^img_qh$', img_qh),
     url(r'^d_qh(\S+)$', download_qh,name = "d_qh"),   #\S+，非空字符
      url(r'^v_1$', video_1),
-
+ #---------------------------------------------
+    url(r'^c_index$', index),
+    # url(r'^p/(?P<id>\d+)/$', single_post),
+    # url(r'^topic/(?P<id>\d+)/$', show_topic),
+    url(r'^post/$', post),
+ #---------------------------------------------
+     url(r'^login/$', home),
 
 ]
